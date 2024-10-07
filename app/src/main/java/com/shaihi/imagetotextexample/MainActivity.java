@@ -43,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri imageUri = result.getData().getData();
                     if (imageUri != null) {
+                        ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), imageUri);
                         try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                            Bitmap bitmap = ImageDecoder.decodeBitmap(source);
                             imageView.setImageBitmap(bitmap);
                             recognizeTextFromImage(bitmap);
                         } catch (IOException e) {
